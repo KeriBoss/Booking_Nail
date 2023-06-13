@@ -12,12 +12,14 @@ if(isset($_POST['fullname']) && isset($_POST['phone']) && isset($_POST['email'])
     $phone = $_POST['phone'];
     $email = $_POST['email'];
     $description = $_POST['description'];
+    $ip_user = 'null';
 
     // var_dump($birth);die();
     try{
-        $insert = $user->insert($fullname, $phone,$email,$description);
+        $insert = $user->insert($fullname, $phone,$email,$description,$ip_user);
         header('location: ../list_user.php');
     } catch(Throwable $err){
-        echo $err;
+        $_SESSION['error'] = "This item cannot be add new! Please check the information and try again!";
+        header('location: ../404.php');
     }
 }

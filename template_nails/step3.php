@@ -1,6 +1,9 @@
 <?php
 include_once './header.php';
 
+if(!isset($_SESSION['cart'])){
+    // header("location: 404.php");
+}
 ?>
 
     <!-- Booking start-->
@@ -22,17 +25,23 @@ include_once './header.php';
                                 </div>
                                 <div class="form-group">
                                     <div class="icon-info"><i class='bx bx-user' ></i></div>
-                                    <input id="valid-name" type="text" name="fullname" class="form-control" placeholder="Enter your full name (required)..." pattern="[a-zA-Z]+ [a-zA-Z]+" required>
-                                </div>
-                                <div class="form-group">
-                                    <div class="icon-info"><i class='bx bx-phone' ></i></div>
-                                    <input id="valid-phone" type="text" name="phone" class="form-control" placeholder="Enter your phone number XXX-XXX-XXXX (required)" required>
+                                    <input id="valid-name" type="text" name="fullname" class="form-control" placeholder="Enter your full name (required)..." required autocomplete="off">
+                                    <!-- pattern="[a-zA-Z]+ [a-zA-Z]+"-->
                                 </div>
                                 <?php if(isset($_SESSION['error-phone'])){ ?>
                                     <div class="text-danger">
                                         <span><?=$_SESSION['error-phone']?></span>
                                     </div>
+                                <?php }else if(isset($_SESSION['error-ip'])){ ?>
+                                    <div class="text-danger">
+                                        <span><?=$_SESSION['error-ip']?></span>
+                                    </div>
                                 <?php } ?>
+                                <div class="form-group">
+                                    <div class="icon-info"><i class='bx bx-phone' ></i></div>
+                                    <input id="valid-phone" type="text" name="phone" class="form-control" placeholder="Enter your phone number XXX-XXX-XXXX (required)" required>
+                                </div>
+                                
                                 <div class="form-group">
                                     <div class="icon-info"><i class='bx bx-envelope' ></i></div>
                                     <input type="email" name="email" class="form-control" placeholder="Enter your email (optional)...">

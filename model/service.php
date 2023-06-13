@@ -22,7 +22,7 @@ class Service extends Database{
      * 
      */
     function getServiceById($id){
-        $sql = parent::$connection->prepare("SELECT *, services.id as ID_service FROM services INNER JOIN nailtype ON services.type_id = nailtype.id INNER JOIN company ON company.id = services.company_id WHERE services.`id` = ?");
+        $sql = parent::$connection->prepare("SELECT *, services.id as ID_service, services.status as status FROM services INNER JOIN nailtype ON services.type_id = nailtype.id INNER JOIN company ON company.id = services.company_id WHERE services.`id` = ?");
         $sql->bind_param('i', $id);
         return parent::select($sql);
     }

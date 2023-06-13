@@ -13,9 +13,9 @@ class User extends Database{
     /**
      * 
      */
-    function insert($fullname, $phone, $email, $desc){
-        $sql = parent::$connection->prepare("INSERT INTO `user`(`fullname`, `phone`, `email`, `description`) VALUES (?, ?, ?, ?)");
-        $sql->bind_param('ssss', $fullname, $phone, $email, $desc);
+    function insert($fullname, $phone, $email, $desc,$ip_user){
+        $sql = parent::$connection->prepare("INSERT INTO `user`(`fullname`, `phone`, `email`, `description`,`ip_user`) VALUES (?, ?, ?, ?, ?)");
+        $sql->bind_param('sssss', $fullname, $phone, $email, $desc,$ip_user);
         if($sql->execute() === true){
             return self::$connection->insert_id;
         }

@@ -45,6 +45,12 @@ $last_time_end = $hour_end . ':' . $minute_end . '' . $period_end;
 //Map location company
 $address = 'Any Street, Any City' ; /* Insert address Here */
 $address = $getAllInfo[0]['address'] ; /* Insert address Here */
+// $address = "79/71/6d Âu Cơ, phường 14, quận 11, thành phố Hồ Chí Minh" ; /* Insert address Here */
+// $address = "thôn Hoài Nhơn, xã Phước Hậu, huyện Ninh Phước, tỉnh Ninh Thuận" ; /* Insert address Here */
+// $ip_address = $_SERVER['REMOTE_ADDR'];
+// echo "Your IP address is: ". $ip_address;
+//domain = https://minbooking.keri.vn/
+
 ?>
 
 <!DOCTYPE html>
@@ -113,7 +119,6 @@ $address = $getAllInfo[0]['address'] ; /* Insert address Here */
             <input type="number" id="guest_com" name="id_com" value="<?=$ID_COM?>" hidden>
         <?php } ?>
         <div class="row m-0" style="background: #e9f0fd;">
-        <a href="tel:0359893447"><i class='bx bx-phone'></i></a>
             <div class="col-lg-12">
                 <div class="company-active section-title">
                     <h2 class="name_com"><?=$getAllInfo[0]['company_name']?></h2>

@@ -78,6 +78,7 @@ if(isset($_POST['staff_id']) && isset($_POST['staff_name']) && isset($_POST['pho
 
         header('location: ../list_staff.php');
     } catch(Throwable $err){
-        echo $err;
+        $_SESSION['error'] = "This item cannot be editted! Please check the information and try again!";
+        header('location: ../404.php');
     }
 }

@@ -72,6 +72,7 @@ if(isset($_POST['company_name']) && isset($_POST['hotline']) && isset($_POST['ad
         $insert = $company->insert($company_name,$image, $hotline, $address, $timestart, $timeend,$status,$password, $day_start, $day_end);
         header('location: ../list_company.php');
     } catch(Throwable $err){
-        echo $err;
+        $_SESSION['error'] = "This item cannot be add new! Please check the information and try again!";
+        header('location: ../404.php');
     }
 }

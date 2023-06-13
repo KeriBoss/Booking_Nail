@@ -136,7 +136,7 @@ function getStaff(reponse){
 }
 
 //Check phone have exits
-const phoneCompany = document.getElementById('phone_company');
+const phoneCompany = document.querySelector('.phone_company');
 const form_company = document.getElementById('form_company');
 let PHONE_NUMBER;
 let CHECK_PHONE = false;

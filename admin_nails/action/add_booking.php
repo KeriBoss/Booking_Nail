@@ -20,6 +20,7 @@ if(isset($_POST['company_id']) && isset($_POST['service_id']) && isset($_POST['s
         $insert = $booking->insert($company_id, $service_id,$staff_id,$date_duration,$time_duration,$user_id);
         header('location: ../list_booking.php');
     } catch(Throwable $err){
-        echo $err;
+        $_SESSION['error'] = "This item cannot be add new! Please check the information and try again!";
+        header('location: ../404.php');
     }
 }

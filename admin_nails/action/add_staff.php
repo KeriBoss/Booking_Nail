@@ -67,6 +67,7 @@ if(isset($_POST['staff_name']) && isset($_POST['phone']) && isset($_POST['email'
         $insert = $staff->insert($staff_name,$image, $phone,$email,$address,$birth,$gender,$company_id,$service_id);
         header('location: ../list_staff.php');
     } catch(Throwable $err){
-        echo $err;
+        $_SESSION['error'] = "This item cannot be add new! Please check the information and try again!";
+        header('location: ../404.php');
     }
 }

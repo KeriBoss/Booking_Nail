@@ -124,7 +124,7 @@ $urlCom = "$path://$server/booking_nail/template_nails/index.php?id=";
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="form-group">
                             <label for="mo_ta"><b>Hotline:</b></label>
-                            <input id="phone_company" type="text" class="form-control" name="hotline" placeholder="Enter hotline..." required>
+                            <input id="valid-phone" type="text" class="form-control phone_company" name="hotline" placeholder="Enter hotline..." required>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-12">

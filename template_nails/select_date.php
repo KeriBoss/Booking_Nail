@@ -8,6 +8,7 @@ $arr_afternoon = [];//Array time in afternoon of service
 $arr_evening = [];//Array time in evening of service
 
 if(isset($_GET['staff_id']) && $_GET['staff_id'] != 'undefined'){
+    $com_id = $_GET['id'];
     $staff_id = $_GET['staff_id'];
 
     $staff = new Staff();
@@ -75,6 +76,7 @@ if(isset($_GET['staff_id']) && $_GET['staff_id'] != 'undefined'){
             <form action="./ajax_show_cart.php" method="get">
             <?php if(isset($_GET['staff_id'])){ ?>
                 <input type="number" id="guest_com" name="staff_id" value="<?=$staff_id?>" hidden>
+                <input type="number" id="id_staff" name="staff_id" value="<?=$staff_id?>" hidden>
             <?php } ?>
                 <div class="row">
                     <div class="col-lg-12">

@@ -69,6 +69,41 @@ window.onclick = function (event) {
 }
 
 
+const validName = document.getElementById('valid-name');
+const validPhone = document.getElementById('valid-phone');
+
+
+function validate(){
+    if(validPhone){
+        var regName = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
+        // var regPhoneVN = /^[0-9]{9,12}$/;
+        if(!regName.test(validPhone.value)){
+            var str = 'Phone number must be formattrd in XXX-XXX-XXXX';
+            // if(!regPhoneVN.test(validPhone.value)){
+            //     str = 'Phone number must be formattrd in XXX-XXX-XXXX or Vietnamese phone number with 9 to 12 digits';
+            // }
+            alert(str);
+            return false;
+        }
+
+        
+        if(validName){
+            let valueName = validName.value;
+            let arr = valueName.split(" ").filter(s => s!== "");
+            if(arr.length != 2){
+                validName.focus = true;
+                alert("Full name included first name and last name. e.g. John Devid");
+                return false;
+            }else{
+                validName.focus = false;
+            }
+        }
+    }
+
+    return true;
+}
+
+
 $('#time_start').timepicker({
     timeFormat: 'H:i',
 });

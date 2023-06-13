@@ -39,7 +39,7 @@ if(!isset($_SESSION['cart'])){
                                             <p class="user"><i class='bx bx-user'></i> <?=$item['user_name']?></p>
                                         </div>
                                         <div class="right">
-                                            <div class="btn-delete" onclick="deleteCart(<?=$item['staff_id']?>,<?=$item['company_id']?>,<?=$item['service_id']?>);">Delete</div>
+                                            <div class="btn-delete" onclick="deleteCart(<?=$item['staff_id']?>,<?=$item['company_id']?>,<?=$item['service_id']?>,'<?=$item['date_duration']?>','<?=$item['time_duration']?>');">Delete</div>
                                         </div>
                                     </div>
                                 </div>

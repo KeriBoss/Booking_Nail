@@ -69,6 +69,7 @@ if(isset($_POST['type_id']) && isset($_POST['type_name']) && isset($_POST['descr
         $update = $nailtype->update($type_id ,$type_name, $image, $description,$status);
         header('location: ../list_nailtype.php');
     } catch(Throwable $err){
-        echo $err;
+        $_SESSION['error'] = "This item cannot be editted! Please check the information and try again!";
+        header('location: ../404.php');
     }
 }

@@ -42,4 +42,14 @@ class NailType extends Database{
         $sql->bind_param('i', $id);
         return $sql->execute();
     }
+    /**
+     * 
+     */
+    function search($com_id, $key){
+        //2. Viết câu SQL
+        $sql = parent::$connection->prepare("SELECT *, services.id as ID_service FROM company INNER JOIN services ON company.id = services.company_id inner join nailtype on nailtype.id = services.type_id WHERE company.`id` = ? AND nailtype.type_name LIKE ?");
+        $search = "%{$key}%";
+        $sql->bind_param('is',$com_id, $search);
+        return parent::select($sql);
+    }
 }

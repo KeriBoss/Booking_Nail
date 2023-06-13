@@ -68,7 +68,7 @@ if(isset($_SESSION['owner'])){
 <div id="newModal" class="modal1" data-display="false">
     <!-- Modal content -->
     <div class="modal-content">
-        <form action="action/add_user.php" method="post" enctype="multipart/form-data">
+        <form action="action/add_user.php" onsubmit="return validate();" method="post" enctype="multipart/form-data">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Add New User</h5>
                 <button type="button" data-modal="close" class="close">
@@ -79,19 +79,19 @@ if(isset($_SESSION['owner'])){
             <div class="modal-body">
                 <div class="form-group">
                     <label for="fullname"><b>Fullname:</b></label>
-                    <input type="text" class="form-control" name="fullname" placeholder="Enter fullname..." required>
+                    <input id="valid-name" type="text" class="form-control" name="fullname" placeholder="Enter fullname..." required>
                 </div>
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="form-group">
                             <label for="phone"><b>Phone:</b></label>
-                            <input type="text" name="phone" class="form-control" required>
+                            <input id="valid-phone" type="text" name="phone" class="form-control" required>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="form-group">
                             <label for="email"><b>Email:</b></label>
-                            <input type="email" name="email" class="form-control" required>
+                            <input type="email" name="email" class="form-control">
                         </div>
                     </div>
                 </div>

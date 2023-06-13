@@ -23,6 +23,19 @@ if (isset($_POST['fullname']) && isset($_POST['phone']) && isset($_POST['email']
     $email = $_POST['email'];
     $description = $_POST['description'];
 
+    // if user from the share internet  
+    if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
+        $ip_user = $_SERVER['HTTP_CLIENT_IP'];  
+    }  
+    //if user is from the proxy  
+    elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
+        $ip_user = $_SERVER['HTTP_X_FORWARDED_FOR'];  
+    }  
+    //if user is from the remote address  
+    else{  
+        $ip_user = $_SERVER['REMOTE_ADDR'];  
+    }  
+
     $user = new User();
     $getUserByPhone = $user->getUserByPhone($phone);
 
@@ -30,7 +43,14 @@ if (isset($_POST['fullname']) && isset($_POST['phone']) && isset($_POST['email']
         $id_com = $_POST['id_company'];
 
         if(count($getUserByPhone) > 0){
+            
             foreach($getUserByPhone as $item){
+                if($ip_user == $item['ip_user']){
+                    $_SESSION['error-ip'] = "This phone number has been booked with us, please wait until the appointment is over";
+                    header("location: step3.php?id=$id_com");die();
+                }else{
+                    unset($_SESSION['error-ip']);
+                }
                 $booking = new Booking();
                 $getBookingByUser = $booking->getBookingByUser($item['id']);
                 foreach($getBookingByUser as $data){
@@ -63,7 +83,7 @@ if (isset($_POST['fullname']) && isset($_POST['phone']) && isset($_POST['email']
             unset($_SESSION['register']);
         }
 
-        $insert_id = $user->insert($fullname, $phone, $email, $description);
+        $insert_id = $user->insert($fullname, $phone, $email, $description, $ip_user);
         if (isset($_SESSION['cart'])) {
             foreach ($_SESSION['cart'] as $item) {
                 $company_id = $item['company_id'];
@@ -76,6 +96,10 @@ if (isset($_POST['fullname']) && isset($_POST['phone']) && isset($_POST['email']
                     $hour = substr($time_duration, 0, 2);
                     $minute = substr($time_duration, 3, 2);
                     $hour = $hour + 12;
+                    $time_duration = $hour . ':' . $minute . ':00';
+                }else if(substr($time_duration, -2, 2) == 'AM'){
+                    $hour = substr($time_duration, 0, 2);
+                    $minute = substr($time_duration, 3, 2);
                     $time_duration = $hour . ':' . $minute . ':00';
                 }
                 $ID_COM = $company_id;
@@ -94,18 +118,18 @@ if (isset($_POST['fullname']) && isset($_POST['phone']) && isset($_POST['email']
             // Find your Account SID and Auth Token at twilio.com/console
             // and set the environment variables. See http://twil.io/secure
 
-            // $twilio = new Client('ACbe33c0954cb9daeae087e7647f3fb368', '68e1c61a040cfbbb7123df57c7172fd9');
-            // //AC5917b53b6fe53799a1f4f06dd14d65fa 324e8886538d3046e211b039871ba69c
+            $twilio = new Client('ACbe33c0954cb9daeae087e7647f3fb368', '59d4a23421f2367c7d8c2a5aa8ccbf6b');
+            //AC5917b53b6fe53799a1f4f06dd14d65fa 324e8886538d3046e211b039871ba69c
 
-            // $message = $twilio->messages
-            //     ->create(
-            //         "+84969747473", // to 84969747473
-            //         [
-            //             "body" => "Nails By The Falls SMS for you! You have $countService service: $listService in $date_duration $time_duration, Please arrive early 5 minutes before the reservation time for the best quality. Thank you very much!",
-            //             "from" => "+13613094713", //12542685884
-            //             "statusCallback" => "http://postb.in/1234abcd" //option
-            //         ]
-            //     );
+            $message = $twilio->messages
+                ->create(
+                    "+84969747473", // to 84969747473
+                    [
+                        "body" => "Nails By The Falls SMS for you! You have $countService service: $listService in $date_duration $time_duration, Please arrive early 5 minutes before the reservation time for the best quality. Thank you very much!",
+                        "from" => "+13613094713", //12542685884
+                        "statusCallback" => "http://postb.in/1234abcd" //option
+                    ]
+                );
 
             // if (isset($_SESSION['date_pick']) && isset($_SESSION['time_pick'])) {
             //     unset($_SESSION['date_pick']);

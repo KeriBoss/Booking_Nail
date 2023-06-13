@@ -74,6 +74,7 @@ if(isset($_POST['owner_id']) && isset($_POST['company_name']) && isset($_POST['p
 
         header('location: ../info_owner.php');
     } catch(Throwable $err){
-        echo $err;
+        $_SESSION['error'] = "This item cannot be editted! Please check the information and try again!";
+        header('location: ../404.php');
     }
 }

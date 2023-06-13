@@ -14,5 +14,6 @@ try{
 
     header('location: ../list_booking.php');
 } catch(Throwable $err){
-    echo $err;
+    $_SESSION['error'] = "This item cannot be deleted! Please check the information and try again!";
+    header('location: ../404.php');
 }

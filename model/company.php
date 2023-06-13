@@ -46,7 +46,7 @@ class Company extends Database{
      * 
      */
     function getServiceByCompany($company_id){
-        $sql = parent::$connection->prepare("SELECT *, services.id as ID_service FROM company INNER JOIN services ON company.id = services.company_id inner join nailtype on nailtype.id = services.type_id WHERE company.`id` = ?");
+        $sql = parent::$connection->prepare("SELECT *, services.id as ID_service, services.status as status FROM company INNER JOIN services ON company.id = services.company_id inner join nailtype on nailtype.id = services.type_id WHERE company.`id` = ?");
         $sql->bind_param('i', $company_id);
         return parent::select($sql);
     }

@@ -20,7 +20,6 @@ $getAllStaff = $staff->getAllStaff();
 
 $user = new User();
 $getAllUser = $user->getAllUser();
-
 ?>
 
 <!-- Begin Page Content -->
@@ -29,7 +28,7 @@ $getAllUser = $user->getAllUser();
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">All booking list</h1>
-        <a id="myBtn" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Add new company</a>
+        <a id="myBtn" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Add new booking</a>
     </div>
 
     <!-- DataTales Example -->
@@ -159,7 +158,7 @@ $getAllUser = $user->getAllUser();
                             <label for="address"><b>Choose Customer:</b></label>
                             <select name="user_id" class="form-control">
                                 <?php foreach($getAllUser as $item){ ?>
-                                    <option value="<?=$item['id']?>"><?=$item['fullname']?></option>
+                                    <option value="<?=$item['id']?>"><?=$item['fullname']?> - <?=$item['phone']?></option>
                                 <?php } ?>
                             </select>
                         </div>

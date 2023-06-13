@@ -65,6 +65,7 @@ if(isset($_POST['service_name']) && isset($_POST['price']) && isset($_POST['time
         $insert = $service->insert($service_name,$image, $price,$time_completion,$type_id,$company_name,$status);
         header('location: ../list_service.php');
     } catch(Throwable $err){
-        echo $err;
+        $_SESSION['error'] = "This item cannot be add new! Please check the information and try again!";
+        header('location: ../404.php');
     }
 }

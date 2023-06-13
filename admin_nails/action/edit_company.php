@@ -80,6 +80,7 @@ if(isset($_POST['company_id']) && isset($_POST['company_name']) && isset($_POST[
         $update = $company->update($company_id ,$company_name,$image, $hotline, $address, $timestart, $timeend,$status,$password, $day_start, $day_end);
         header('location: ../list_company.php');
     } catch(Throwable $err){
-        echo $err;
+        $_SESSION['error'] = "This item cannot be editted! Please check the information and try again!";
+        header('location: ../404.php');
     }
 }

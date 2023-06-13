@@ -34,38 +34,40 @@ window.onclick = function (event) {
 
 const validName = document.getElementById('valid-name');
 const validPhone = document.getElementById('valid-phone');
-if(validName){
-    validName.oninvalid = function(event) {
-        event.target.setCustomValidity('Username includes first and last name. e.g. John Devid');
-    }
-}
+
 
 function validate(){
-    if(validPhone){
+    if(validPhone && validName){
         var regName = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
-        var regPhoneVN = /^[0-9]{9,12}$/;
-        if(!regName.test(validPhone.value) && !regPhoneVN.test(validPhone.value)){
-            var str = '';
-            if(!regName.test(validPhone.value)){
-                str = 'Phone number must be formattrd in XXX-XXX-XXXX or Vietnamese phone number with 9 to 12 digits';
-            }
-            if(!regPhoneVN.test(validPhone.value)){
-                str = 'Phone number must be formattrd in XXX-XXX-XXXX or Vietnamese phone number with 9 to 12 digits';
-            }
+        // var regPhoneVN = /^[0-9]{9,12}$/;
+        if(!regName.test(validPhone.value)){
+            var str = 'Phone number must be formattrd in XXX-XXX-XXXX';
+            // if(!regPhoneVN.test(validPhone.value)){
+            //     str = 'Phone number must be formattrd in XXX-XXX-XXXX or Vietnamese phone number with 9 to 12 digits';
+            // }
             alert(str);
-            validPhone.focus();
+            return false;
+        }
+
+        let valueName = validName.value;
+        let arr = valueName.split(" ").filter(s => s!== "");
+        if(arr.length != 2){
+            validName.focus = true;
+            alert("Full name included first name and last name. e.g. John Devid");
             return false;
         }else{
-            return true;
+            validName.focus = false;
         }
     }
+
+    return true;
 }
-if(validPhone){
-    validPhone.addEventListener("invalid", function(event) {
-        event.preventDefault();
-        validPhone.setCustomValidity("Please enter a valid input");
-    });
-}
+// if(validPhone){
+//     validPhone.addEventListener("invalid", function(event) {
+//         event.preventDefault();
+//         validPhone.setCustomValidity("Please enter a valid input");
+//     });
+// }
 
 //Change color BG
 const settingColor = document.querySelector('.setting-color');

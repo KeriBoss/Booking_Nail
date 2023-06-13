@@ -19,6 +19,7 @@ if(isset($_POST['fullname']) && isset($_POST['phone']) && isset($_POST['email'])
 
         header('location: ../list_user.php');
     } catch(Throwable $err){
-        echo $err;
+        $_SESSION['error'] = "This item cannot be editted! Please check the information and try again!";
+        header('location: ../404.php');
     }
 }

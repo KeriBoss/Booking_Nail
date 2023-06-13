@@ -518,13 +518,13 @@ function showCart(staff_id) {
                     <div class="schedule-card">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="left">
-                                <p class="name">${item['company_name']} $ ${item['type_name']} $ ${item['name_service']}</p>
+                                <p class="name">${item['type_name']} $ ${item['name_service']} <i class='bx bx-time-five'></i> ${item['date_duration']} ${item['time_duration']}</p>
                                 <p><i class='bx bx-time-five'></i> ${hour} hours ${minute}
                                     minutes <span class="space">.</span> <span class="price">$${item['price']}</span></p>
                                 <p class="user"><i class='bx bx-user'></i> ${item['user_name']}</p>
                             </div>
                             <div class="right">
-                                <div onclick="deleteCart(${item['staff_id']},${item['company_id']},${item['service_id']});" class="btn-delete">Delete</div>
+                                <div onclick="deleteCart(${item['staff_id']},${item['company_id']},${item['service_id']},'${item['date_duration']}','${item['time_duration']}');" class="btn-delete">Delete</div>
                             </div>
                         </div>
                     </div>
@@ -544,7 +544,7 @@ function setStaffAndDate(){
     window.location.href = `choose_any_staff.php?id=${ID_COMPANY}&type_id=${ID_SERVICE_TOGGLE}`;
 }
 
-function deleteCart(staff_id, company_id, service_id) {
+function deleteCart(staff_id, company_id, service_id,date_duration, time) {
     $.ajax({
         url: "ajax_delete_cart.php",
         type: "get",
@@ -553,8 +553,11 @@ function deleteCart(staff_id, company_id, service_id) {
             staff_id: staff_id,
             company_id: company_id,
             service_id: service_id,
+            date_duration: date_duration,
+            time_duration: time
         },
     }).done(function (reponse) {
+        console.log(date_duration);
         if (cart) {
             cart.innerHTML = '';
             reponse.forEach(item => {
@@ -571,7 +574,7 @@ function deleteCart(staff_id, company_id, service_id) {
                             <p class="user"><i class='bx bx-user'></i> ${item['user_name']}</p>
                         </div>
                         <div class="right">
-                            <div onclick="deleteCart(${item['staff_id']},${item['company_id']},${item['service_id']});" class="btn-delete">Delete</div>
+                            <div onclick="deleteCart(${item['staff_id']},${item['company_id']},${item['service_id']},'${item['date_duration']}','${item['time_duration']}');" class="btn-delete">Delete</div>
                         </div>
                     </div>
                 </div>
@@ -624,40 +627,45 @@ $('#myInput').datepicker({
     todayBtn: true,
     autoclose: true,
 });
-const myInput = document.querySelector('#myInput');
+const myInputDate = document.querySelector('#myInput');
 const list_hours = document.querySelectorAll('.list-date .list-hour');
+let DATE_INPUT = '';
 
+const inputStaff = document.getElementById('id_staff');
 window.addEventListener('load', function(event){
-    if(myInput){
+    if(myInputDate && inputStaff){
+        var staff_ID = inputStaff.value;
         var currentDate = new Date();
         var currentYear = currentDate.getFullYear();
         var currentMonth = (currentDate.getMonth()+1) < 10 ? "0" + (currentDate.getMonth()+1) : (currentDate.getMonth()+1);
         var currentDay = currentDate.getDate() < 10 ? "0" + currentDate.getDate() : currentDate.getDate();
+        myInputDate.value = `${currentDay}/${currentMonth}/${currentYear}`;
+        DATE_INPUT = `${currentYear}-${currentMonth}-${currentDay}`;
 
-        myInput.value = `${currentDay}/${currentMonth}/${currentYear}`;
-        propressTime(ID_COMPANY);
+        propressTime(staff_ID);
     }
 })
 
 function propressTime(staff_id) {
     clearActive();
-    if (myInput && list_hours) {
+    if (myInputDate && list_hours) {
         // myInput.addEventListener('change', function (e) {
 
-        var dateTemp = myInput.value;
+        var dateTemp = myInputDate.value;
         var date = dateTemp.slice(0, 2)
         var month = dateTemp.slice(3, 5)
         var year = dateTemp.slice(6, 10)
 
         var newDate_php = year + "-" + month + "-" + date;
-
         var today = new Date();
 
         var date_cur = today.getDate() < 10 ? "0" + today.getDate() : today.getDate();
         var month_cur = (today.getMonth()+1) < 10 ? "0" + (today.getMonth()+1) : (today.getMonth()+1);
 
+        var hour = (today.getHours()+1) < 10 ? '0' + (today.getHours()+1) : (today.getHours()+1);
+
         var curent_date = today.getFullYear()+'-'+month_cur+'-'+date_cur;
-        var curent_time = (today.getHours()+1) + ":" + today.getMinutes();
+        var curent_time = hour + ":" + today.getMinutes();
 
         $.ajax({
             url: "ajax_check_date.php",
@@ -685,10 +693,9 @@ function propressTime(staff_id) {
                                     var last_hour = (data.value.slice(0, 2))*1 + 12;
                                     var last_minute = (data.value.slice(3, 5));
                                     divInput = last_hour + ":" + last_minute;
-
                                 }
                             }
-                            if (time == divInput) {
+                            if (time == divInput || newArr[i] == data.value) {
                                 data.parentElement.classList.add('unactive');
                             }
                         }
@@ -739,4 +746,25 @@ function unique(arr) {
         }
     }
     return newArr
+}
+
+
+//Search service
+const search = document.getElementById('search-service');
+
+if(search){
+    search.addEventListener('keyup', function(event){
+        var keyword = event.target.value;
+        $.ajax({
+            url: "ajax_search_service.php",
+            type: "get",
+            dataType: "json",
+            data: {
+                com_id: ID_COMPANY,
+                keyword: keyword,
+            },
+        }).done(function (reponse) {
+            setContentService(reponse)
+        })
+    })
 }

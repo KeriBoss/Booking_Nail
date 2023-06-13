@@ -19,6 +19,7 @@ $getServiceById = $service->getServiceById($id);
 
 $company = new Company();
 $getAllCompany = $company->getAllCompany();
+
 ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -89,8 +90,8 @@ $getAllCompany = $company->getAllCompany();
                         <div class="form-group">
                             <label for="status"><b>Status:</b></label>
                             <select name="status" class="form-control">
-                                <option value="1">Show</option>
-                                <option value="0">Hidden</option>
+                                <option class="statusDiv" value="1">Show</option>
+                                <option class="statusDiv" value="0">Hidden</option>
                             </select>
                         </div>
                     </div>
@@ -136,6 +137,12 @@ $getAllCompany = $company->getAllCompany();
     for (var i = 0; i < document.querySelectorAll('.typeDiv').length; i++) {
         if (document.querySelectorAll('.typeDiv')[i].value == '<?= $getServiceById[0]['type_id']; ?>') {
             document.querySelectorAll('.typeDiv')[i].selected = true;
+            break;
+        }
+    }
+    for (var i = 0; i < document.querySelectorAll('.statusDiv').length; i++) {
+        if (document.querySelectorAll('.statusDiv')[i].value == '<?= $getServiceById[0]['status']; ?>') {
+            document.querySelectorAll('.statusDiv')[i].selected = true;
             break;
         }
     }

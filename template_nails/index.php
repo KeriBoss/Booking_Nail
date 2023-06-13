@@ -74,7 +74,7 @@ if(isset($_SESSION['error-phone'])){
                                     <div id="home" class="tab-pane fade show active">
                                         <div class="form-parent mb-3">
                                             <div class="icon-search"><i class='bx bx-search'></i></div>
-                                            <input type="search" id="form1" class="form-control" placeholder="Type query" aria-label="Search" />
+                                            <input type="search" id="search-service" class="form-control" placeholder="Type query" aria-label="Search" />
                                         </div>
                                         <div class="collapse show filter-service">
                                             <!-- <div class="collapse-item">
