@@ -25,7 +25,7 @@ if(!isset($_SESSION['cart'])){
                                 </div>
                                 <div class="form-group">
                                     <div class="icon-info"><i class='bx bx-user' ></i></div>
-                                    <input id="valid-name" type="text" name="fullname" class="form-control" placeholder="Enter your full name (required)..." required autocomplete="off">
+                                    <input id="valid-name" type="text" name="fullname" class="form-control" placeholder="Full name (*)" required autocomplete="off">
                                     <!-- pattern="[a-zA-Z]+ [a-zA-Z]+"-->
                                 </div>
                                 <?php if(isset($_SESSION['error-phone'])){ ?>
@@ -39,15 +39,25 @@ if(!isset($_SESSION['cart'])){
                                 <?php } ?>
                                 <div class="form-group">
                                     <div class="icon-info"><i class='bx bx-phone' ></i></div>
-                                    <input id="valid-phone" type="text" name="phone" class="form-control" placeholder="Enter your phone number XXX-XXX-XXXX (required)" required>
+                                    <input id="valid-phone" type="text" name="phone" class="form-control" placeholder="Phone number(___) ___-____ (*)" required>
                                 </div>
                                 
                                 <div class="form-group">
                                     <div class="icon-info"><i class='bx bx-envelope' ></i></div>
-                                    <input type="email" name="email" class="form-control" placeholder="Enter your email (optional)...">
+                                    <input type="email" name="email" class="form-control" placeholder="Email(optional)">
                                 </div>
                                 <div class="form-group">
-                                    <textarea name="description" class="form-control" placeholder="Enter your appointmant note (optional)..."></textarea>
+                                    <textarea name="description" class="form-control" placeholder="Appointment notes(optional)"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <div class="accept-condition">
+                                        <div class="item">
+                                            
+                                        </div>
+                                        <div class="desc">
+                                            <p><i>(*) is required. Please check your input information before submit.</i></p>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="accept-condition">
@@ -62,7 +72,7 @@ if(!isset($_SESSION['cart'])){
                                 </div>
                                 <div class="footer-end mt-5">
                                     <div class="group-btn">
-                                        <a href="index.php?id=<?=$ID_COM?>" class="back">Back</a>
+                                        <a href="cart.php?id=<?=$ID_COM?>" class="back">Back</a>
                                         <button type="submit">Book appointment</button>
                                     </div>
                                 </div>

@@ -14,6 +14,7 @@
     <script src="./js/mdb.min.js"></script>
     <script src="./js/script.js"></script>
     <script src="./js/ajax.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </body>
 
 </html>

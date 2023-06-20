@@ -67,6 +67,8 @@ $address = $getAllInfo[0]['address'] ; /* Insert address Here */
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="./css/mobiscroll.javascript.min.css">
     <!-- Css Styles -->
@@ -101,7 +103,7 @@ $address = $getAllInfo[0]['address'] ; /* Insert address Here */
             <div class="group-color">
                 <ul>
                     <li>
-                        <button data-color="linear-gradient(#cddffb, #9ce0ef)" data-button="#0084bc" style="--color: #0084bc;"></button>
+                        <button data-color="radial-gradient(45.21% 19.8% at 52.09% 54.51%, #67bfeb 0%, #b2fbfb 100%)" data-button="rgba(0, 132, 188, 0.7)" style="--color: #0084bc;"></button>
                     </li>
                     <li>
                         <button data-color="linear-gradient(90deg, rgba(255,166,158,1) 0%, rgba(233,239,156,0.9809173669467787) 57%)" data-button="#C38154" style="--color: #C38154"></button>
@@ -118,7 +120,14 @@ $address = $getAllInfo[0]['address'] ; /* Insert address Here */
         <?php if(isset($_GET['id'])){ ?>
             <input type="number" id="guest_com" name="id_com" value="<?=$ID_COM?>" hidden>
         <?php } ?>
-        <div class="row m-0" style="background: #e9f0fd;">
+        <div class="row m-0 mt-2" style="background: #e9f0fd;">
+            <div class="col-lg-12 col-12">
+                <div class="d-flex justify-content-center">
+                    <a class="logo-company" href="./index.php?id=<?=$ID_COM?>">
+                        <img src="./img/company/<?=$getAllInfo[0]['img_company']?>" alt="">
+                    </a>
+                </div>
+            </div>
             <div class="col-lg-12">
                 <div class="company-active section-title">
                     <h2 class="name_com"><?=$getAllInfo[0]['company_name']?></h2>

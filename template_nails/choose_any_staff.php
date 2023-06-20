@@ -30,7 +30,7 @@ if(isset($_GET['id']) && isset($_GET['type_id'])){
         $randomValue = $getStaffByCompanyAndService[array_rand($getStaffByCompanyAndService)];
         $ID_STAFF = $randomValue['id'];
     }
-    
+    // var_dump($getStaffByCompanyAndService);die();
     
     header("location: ajax_select_date.php?id=$id_com&staff=$ID_STAFF");
 

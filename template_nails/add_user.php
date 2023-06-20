@@ -12,10 +12,9 @@ require_once  "../model/booking.php";
 
 $user = new User();
 
-// if (isset($_POST['date_pick']) && isset($_POST['time_pick'])) {
-//     $date_duration = $_POST['date_pick'];
-//     $time_duration = $_POST['time_pick'];
-// }
+if(isset($_SESSION['error-ip'])){
+    unset($_SESSION['error-ip']);
+}
 
 if (isset($_POST['fullname']) && isset($_POST['phone']) && isset($_POST['email']) && isset($_POST['description'])) {
     $fullname = $_POST['fullname'];
@@ -84,6 +83,9 @@ if (isset($_POST['fullname']) && isset($_POST['phone']) && isset($_POST['email']
         }
 
         $insert_id = $user->insert($fullname, $phone, $email, $description, $ip_user);
+        if($insert_id){
+            $_SESSION['user-book'] = [$fullname, $phone];
+        }
         if (isset($_SESSION['cart'])) {
             foreach ($_SESSION['cart'] as $item) {
                 $company_id = $item['company_id'];
@@ -118,8 +120,8 @@ if (isset($_POST['fullname']) && isset($_POST['phone']) && isset($_POST['email']
             // Find your Account SID and Auth Token at twilio.com/console
             // and set the environment variables. See http://twil.io/secure
 
-            $twilio = new Client('ACbe33c0954cb9daeae087e7647f3fb368', '59d4a23421f2367c7d8c2a5aa8ccbf6b');
-            //AC5917b53b6fe53799a1f4f06dd14d65fa 324e8886538d3046e211b039871ba69c
+            $twilio = new Client('ACbe33c0954cb9daeae087e7647f3fb368', '1386375556faa7d9b390651f3bf597c6');
+            // //AC5917b53b6fe53799a1f4f06dd14d65fa 324e8886538d3046e211b039871ba69c
 
             $message = $twilio->messages
                 ->create(

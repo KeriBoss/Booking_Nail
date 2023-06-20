@@ -16,6 +16,9 @@ const company_active = document.querySelector('.company-active');
 const guest_com_toggle = document.getElementById('guest_com_toggle');
 
 let ID_COMPANY;
+let ID_STAFF = 0;
+let ID_SERVICE;
+
 let ID_STAFF_TOGGLE;
 let ID_COMPANY_TOGGLE;
 let ID_SERVICE_TOGGLE;
@@ -133,6 +136,7 @@ window.addEventListener("load", function (e) {
 
     if (card_staff) {
         card_staff.innerHTML = `<div class="text-center"><h3>Please select a service in the previous tab!</h3></div>`;
+
     }
 
     const myBtn = this.document.getElementById('myBtn');
@@ -233,6 +237,7 @@ function getServiceByType2(type_id, company_id, index) {
 
 //Function checked input when click any point in div service
 function thisInputShowStaff(event,id_service){
+    ID_STAFF = 0;
     var divParent = event.target.parentElement;
     var parent2 = divParent.parentElement;
     var input = parent2.querySelector('input[type=radio]');
@@ -260,26 +265,49 @@ function thisInputShowStaff(event,id_service){
             }else{
                 reponse.forEach(item => {
                     card_staff.innerHTML += `
-                    <div class="card-staff">
+                    <div class="card-staff" data-staff="${item['id']}">
                         <div class="card-item card-left">
                             <div class="d-flex align-items-center">
                                 <img src="./img/staff/${item['avatar']}" width="70px" height="70px" alt="${item['avatar']}">
                                 <p class="name ml-3">${item['user_name']}</p>
                             </div>
                         </div>
-                        <div class="card-item card-right">
-                            
-                            <a href="ajax_select_date.php?id=${item['company_id']}&staff=${item['id']}" class="btn btn-primary text-white">BOOK</a>
-                        </div>
+
                     </div>
                     `;
                     // <a onclick="showCart(${item['id']});" class="btn btn-primary text-white">BOOK</a>
                 })
-                card_staff.innerHTML += `<a onclick="setStaffAndDate();" class="btn btn-addmore"><i class='bx bx-plus'></i> Choose any staff and date</a>`;
+                card_staff.innerHTML += `
+                <div class="footer-end my-5">
+                    <div class="group-btn">
+                        <a id="back-tab-service" onclick="backService();" class="back">Back</a>
+                        <a id="next-step-date" href="ajax_select_date.php?id=${ID_COMPANY}&staff=${ID_STAFF}">Continue</a>
+                    </div>
+                </div>
+                `;
+
+                var aDiv = `
+                    <div class="card-staff" id="any-staff">
+                        <div class="card-item card-left">
+                            <div class="d-flex align-items-center">
+                                <img src="./img/staff/male-avatar 1.png" width="70px" height="70px" alt="">
+                                <p class="name ml-3">Any Staff</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                `;
+                card_staff.insertAdjacentHTML("afterbegin", aDiv);
             }
+            activeStaff()
         });
+    //     <div class="card-item card-right">
+                            
+    //     <a href="ajax_select_date.php?id=${item['company_id']}&staff=${item['id']}" class="btn btn-primary text-white">BOOK</a>
+    // </div>
 }
 function checkedInput(event, id_service) {
+    ID_STAFF = 0;
     ID_SERVICE_TOGGLE = id_service;
     
     var input = event.target.querySelector('input[type=radio]');
@@ -303,25 +331,116 @@ function checkedInput(event, id_service) {
             }else{
                 reponse.forEach(item => {
                     card_staff.innerHTML += `
-                    <div class="card-staff">
+                    <div class="card-staff" data-staff="${item['id']}">
                         <div class="card-item card-left">
                             <div class="d-flex align-items-center">
                                 <img src="./img/staff/${item['avatar']}" width="70px" height="70px" alt="${item['avatar']}">
                                 <p class="name ml-3">${item['user_name']}</p>
                             </div>
                         </div>
-                        <div class="card-item card-right">
-                        <a href="ajax_select_date.php?id=${item['company_id']}&staff=${item['id']}" class="btn btn-primary text-white">BOOK</a>
-                        </div>
+                        
                     </div>
                     `;
                 })
-                card_staff.innerHTML += `<a onclick="setStaffAndDate();" class="btn btn-addmore"><i class='bx bx-plus'></i> Choose any staff and date</a>`;
+                
+                card_staff.innerHTML += `
+                <div class="footer-end my-5">
+                    <div class="group-btn">
+                        <a id="back-tab-service" onclick="backService();" class="back">Back</a>
+                        <a id="next-step-date" href="ajax_select_date.php?id=${ID_COMPANY}&staff=${ID_STAFF}">Continue</a>
+                    </div>
+                </div>
+                `;
+                // `<a onclick="setStaffAndDate();" class="btn btn-addmore"><i class='bx bx-plus'></i> Choose any staff</a>`
+                var aDiv = `
+                    <div class="card-staff" id="any-staff">
+                        <div class="card-item card-left">
+                            <div class="d-flex align-items-center">
+                                <img src="./img/staff/male-avatar 1.png" width="70px" height="70px" alt="">
+                                <p class="name ml-3">Any Staff</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                `;
+                card_staff.insertAdjacentHTML("afterbegin", aDiv);
             }
-            
+            activeStaff()
         });
     }
+    // <div class="card-item card-right">
+    // <a href="ajax_select_date.php?id=${item['company_id']}&staff=${item['id']}">Continue</a>
+    //     <a href="ajax_select_date.php?id=${item['company_id']}&staff=${item['id']}" class="btn btn-primary text-white">BOOK</a>
+    // </div>
 }
+
+function activeStaff(){
+    if(card_staff){
+        var nextStep = document.getElementById('next-step-date');
+        var any_staff = document.getElementById('any-staff');
+
+        if(nextStep){
+            if(ID_STAFF == 0){
+                nextStep.style.pointerEvents = 'none';
+                nextStep.style.opacity = '0.5';
+            }
+        }
+
+        // choose_any_staff.php?id=${ID_COMPANY}&type_id=${ID_SERVICE_TOGGLE}
+
+        var staffItem = card_staff.querySelectorAll('.card-staff');
+        
+        staffItem.forEach(item => {
+            item.addEventListener('click', function(event){
+                clearActiveStaff();
+                item.classList.add('active');
+                ID_STAFF = item.dataset.staff;
+                if(nextStep){
+                    if(ID_STAFF != 0){
+                        nextStep.style.pointerEvents = 'visible';
+                        nextStep.style.opacity = '1';
+                    }
+                    let classAny = any_staff.classList.contains('active');
+
+                    if(any_staff && classAny){
+                        nextStep.setAttribute('href', `choose_any_staff.php?id=${ID_COMPANY}&type_id=${ID_SERVICE_TOGGLE}`)
+                    }else{
+                        nextStep.setAttribute('href', `ajax_select_date.php?id=${ID_COMPANY}&staff=${ID_STAFF}`)
+                    }
+                }
+                
+            })
+        })
+    }
+}
+function clearActiveStaff(){
+    if(card_staff){
+        var staffItem = card_staff.querySelectorAll('.card-staff');
+        staffItem.forEach(item => {
+            item.classList.remove('active');
+        })
+    }
+}
+
+function backService(){
+    const btnBack = document.getElementById('back-tab-service');
+    if(btnBack){
+        var tabPillService = document.querySelector('.card-booking .nav-tabs li:first-child a');
+        var tabPillStaff = document.querySelector('.card-booking .nav-tabs li:last-child a');
+
+        var tabCtnService = document.querySelector('.card-booking .tab-content #home');
+        var tabCtnStaff = document.querySelector('.card-booking .tab-content #menu1');
+
+        tabPillStaff.classList.remove('active');
+        tabPillService.classList.add('active');
+
+        tabCtnStaff.classList.remove('active');
+        tabCtnStaff.classList.remove('show');
+        tabCtnService.classList.add('active');
+        tabCtnService.classList.add('show');
+    }
+}
+
 function showStaffByid(event, id_service) {
     var input = event.target.querySelector('input[type=radio]');
     var parent_toggle = event.target.parentElement;
@@ -539,7 +658,14 @@ function checkStaffChoose() {
     window.location.href = `ajax_select_date.php?id=${ID_COMPANY}&staff=${ID_STAFF_TOGGLE}`;
     modal.style.display = "none";
 }
-
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if(modal){
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+}
 function setStaffAndDate(){
     window.location.href = `choose_any_staff.php?id=${ID_COMPANY}&type_id=${ID_SERVICE_TOGGLE}`;
 }
@@ -627,126 +753,126 @@ $('#myInput').datepicker({
     todayBtn: true,
     autoclose: true,
 });
-const myInputDate = document.querySelector('#myInput');
-const list_hours = document.querySelectorAll('.list-date .list-hour');
-let DATE_INPUT = '';
+// const myInputDate = document.querySelector('#myInput');
+// const list_hours = document.querySelectorAll('.list-date .list-hour');
+// let DATE_INPUT = '';
 
-const inputStaff = document.getElementById('id_staff');
-window.addEventListener('load', function(event){
-    if(myInputDate && inputStaff){
-        var staff_ID = inputStaff.value;
-        var currentDate = new Date();
-        var currentYear = currentDate.getFullYear();
-        var currentMonth = (currentDate.getMonth()+1) < 10 ? "0" + (currentDate.getMonth()+1) : (currentDate.getMonth()+1);
-        var currentDay = currentDate.getDate() < 10 ? "0" + currentDate.getDate() : currentDate.getDate();
-        myInputDate.value = `${currentDay}/${currentMonth}/${currentYear}`;
-        DATE_INPUT = `${currentYear}-${currentMonth}-${currentDay}`;
+// const inputStaff = document.getElementById('id_staff');
+// window.addEventListener('load', function(event){
+//     if(myInputDate && inputStaff){
+//         var staff_ID = inputStaff.value;
+//         var currentDate = new Date();
+//         var currentYear = currentDate.getFullYear();
+//         var currentMonth = (currentDate.getMonth()+1) < 10 ? "0" + (currentDate.getMonth()+1) : (currentDate.getMonth()+1);
+//         var currentDay = currentDate.getDate() < 10 ? "0" + currentDate.getDate() : currentDate.getDate();
+//         myInputDate.value = `${currentDay}/${currentMonth}/${currentYear}`;
+//         DATE_INPUT = `${currentYear}-${currentMonth}-${currentDay}`;
 
-        propressTime(staff_ID);
-    }
-})
+//         propressTime(staff_ID);
+//     }
+// })
 
-function propressTime(staff_id) {
-    clearActive();
-    if (myInputDate && list_hours) {
-        // myInput.addEventListener('change', function (e) {
+// function propressTime(staff_id) {
+//     clearActive();
+//     if (myInputDate && list_hours) {
+//         // myInput.addEventListener('change', function (e) {
 
-        var dateTemp = myInputDate.value;
-        var date = dateTemp.slice(0, 2)
-        var month = dateTemp.slice(3, 5)
-        var year = dateTemp.slice(6, 10)
+//         var dateTemp = myInputDate.value;
+//         var date = dateTemp.slice(0, 2)
+//         var month = dateTemp.slice(3, 5)
+//         var year = dateTemp.slice(6, 10)
 
-        var newDate_php = year + "-" + month + "-" + date;
-        var today = new Date();
+//         var newDate_php = year + "-" + month + "-" + date;
+//         var today = new Date();
 
-        var date_cur = today.getDate() < 10 ? "0" + today.getDate() : today.getDate();
-        var month_cur = (today.getMonth()+1) < 10 ? "0" + (today.getMonth()+1) : (today.getMonth()+1);
+//         var date_cur = today.getDate() < 10 ? "0" + today.getDate() : today.getDate();
+//         var month_cur = (today.getMonth()+1) < 10 ? "0" + (today.getMonth()+1) : (today.getMonth()+1);
 
-        var hour = (today.getHours()+1) < 10 ? '0' + (today.getHours()+1) : (today.getHours()+1);
+//         var hour = (today.getHours()+1) < 10 ? '0' + (today.getHours()+1) : (today.getHours()+1);
 
-        var curent_date = today.getFullYear()+'-'+month_cur+'-'+date_cur;
-        var curent_time = hour + ":" + today.getMinutes();
+//         var curent_date = today.getFullYear()+'-'+month_cur+'-'+date_cur;
+//         var curent_time = hour + ":" + today.getMinutes();
 
-        $.ajax({
-            url: "ajax_check_date.php",
-            type: "get",
-            dataType: "json",
-            data: {
-                staff_id: staff_id,
-                date_pick: newDate_php,
-            },
-        }).done(function (reponse) {
-            var newArr = unique(reponse);
-            list_hours.forEach(item => {
+//         $.ajax({
+//             url: "ajax_check_date.php",
+//             type: "get",
+//             dataType: "json",
+//             data: {
+//                 staff_id: staff_id,
+//                 date_pick: newDate_php,
+//             },
+//         }).done(function (reponse) {
+//             var newArr = unique(reponse);
+//             list_hours.forEach(item => {
                 
-                var input = item.querySelectorAll('input[type=radio]');
-                input.forEach(data => {
-                    for (let i = 0; i < newArr.length; i++) {
-                        if (typeof newArr[i] != 'undefined') {
-                            var divInput = data.value.slice(0, 5);
+//                 var input = item.querySelectorAll('input[type=radio]');
+//                 input.forEach(data => {
+//                     for (let i = 0; i < newArr.length; i++) {
+//                         if (typeof newArr[i] != 'undefined') {
+//                             var divInput = data.value.slice(0, 5);
                             
-                            var time = newArr[i].slice(0, 5);
-                            var am_pm = data.value.slice(-2);
-                            if(am_pm == 'PM'){
-                                var hour = (data.value.slice(0, 2))*1;
-                                if(hour != 12){
-                                    var last_hour = (data.value.slice(0, 2))*1 + 12;
-                                    var last_minute = (data.value.slice(3, 5));
-                                    divInput = last_hour + ":" + last_minute;
-                                }
-                            }
-                            if (time == divInput || newArr[i] == data.value) {
-                                data.parentElement.classList.add('unactive');
-                            }
-                        }
-                    }
-                    if(newDate_php == curent_date){
-                        var divInput = data.value.slice(0, 5);
+//                             var time = newArr[i].slice(0, 5);
+//                             var am_pm = data.value.slice(-2);
+//                             if(am_pm == 'PM'){
+//                                 var hour = (data.value.slice(0, 2))*1;
+//                                 if(hour != 12){
+//                                     var last_hour = (data.value.slice(0, 2))*1 + 12;
+//                                     var last_minute = (data.value.slice(3, 5));
+//                                     divInput = last_hour + ":" + last_minute;
+//                                 }
+//                             }
+//                             if (time == divInput || newArr[i] == data.value) {
+//                                 data.parentElement.classList.add('unactive');
+//                             }
+//                         }
+//                     }
+//                     if(newDate_php == curent_date){
+//                         var divInput = data.value.slice(0, 5);
 
-                        var am_pm = data.value.slice(-2);
-                        if(am_pm == 'PM'){
-                            var hour = (data.value.slice(0, 2))*1;
-                            if(hour != 12){
-                                var last_hour = (data.value.slice(0, 2))*1 + 12;
-                                var last_minute = (data.value.slice(3, 5));
-                                divInput = last_hour + ":" + last_minute;
+//                         var am_pm = data.value.slice(-2);
+//                         if(am_pm == 'PM'){
+//                             var hour = (data.value.slice(0, 2))*1;
+//                             if(hour != 12){
+//                                 var last_hour = (data.value.slice(0, 2))*1 + 12;
+//                                 var last_minute = (data.value.slice(3, 5));
+//                                 divInput = last_hour + ":" + last_minute;
 
-                            }
-                        }
-                        if(divInput <= curent_time){
-                            data.parentElement.classList.add('unactive');
-                        }
-                    }
-                })
-            })
-        });
-        // })
-    }
-}
+//                             }
+//                         }
+//                         if(divInput <= curent_time){
+//                             data.parentElement.classList.add('unactive');
+//                         }
+//                     }
+//                 })
+//             })
+//         });
+//         // })
+//     }
+// }
 
-function clearActive(){
-    const list_hours1 = document.querySelectorAll('.list-date .list-hour');
+// function clearActive(){
+//     const list_hours1 = document.querySelectorAll('.list-date .list-hour');
 
-    if(list_hours1){
-        list_hours1.forEach(item => {
-            var div = item.querySelectorAll('div');
-            div.forEach(data => {
-                data.classList.remove('unactive');
-            })
-        })
-    }
-}
+//     if(list_hours1){
+//         list_hours1.forEach(item => {
+//             var div = item.querySelectorAll('div');
+//             div.forEach(data => {
+//                 data.classList.remove('unactive');
+//             })
+//         })
+//     }
+// }
 
-function unique(arr) {
-    var formArr = arr.sort()
-    var newArr = [formArr[0]]
-    for (let i = 1; i < formArr.length; i++) {
-        if (formArr[i] !== formArr[i - 1]) {
-            newArr.push(formArr[i])
-        }
-    }
-    return newArr
-}
+// function unique(arr) {
+//     var formArr = arr.sort()
+//     var newArr = [formArr[0]]
+//     for (let i = 1; i < formArr.length; i++) {
+//         if (formArr[i] !== formArr[i - 1]) {
+//             newArr.push(formArr[i])
+//         }
+//     }
+//     return newArr
+// }
 
 
 //Search service

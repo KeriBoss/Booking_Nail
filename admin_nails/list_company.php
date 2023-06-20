@@ -37,7 +37,7 @@ $urlCom = "$path://$server/booking_nail/template_nails/index.php?id=";
                         <tr>
                             <th>Id</th>
                             <th>Name</th>
-                            <th width="20%">Image</th>
+                            <th width="20%">Logo</th>
                             <th>Hotline</th>
                             <th>Time Start</th>
                             <th>Time End</th>

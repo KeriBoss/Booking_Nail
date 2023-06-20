@@ -85,7 +85,65 @@ if(isset($_GET['staff_id']) && $_GET['staff_id'] != 'undefined'){
                                 <h5>Select date and time</h5>
                             </div>
                             <div class="list-date mt-3 mb-3">
-                                <input onchange="propressTime(<?=$staff_id?>);" id="myInput" name="date_checked" class="form-control" autocomplete="off" required/>
+                            <!-- onchange="propressTime(<?=$staff_id?>);" -->
+                                <input id="myInput" name="date_checked" class="form-control" hidden/>
+                                <div class="row">
+                                    <div class="col-lg-12 col-12 text-center">
+                                        <a class="month-year"><b>March, 2023</b></a>
+                                    </div>
+                                    <div class="col-12 p-0">
+                                        <div class="group-date py-3">
+                                            <div class="btn btn-previous"><i class='bx bxs-chevron-left'></i></div>
+                                            <div class="parent-date">
+                                                <div class="list-date">
+                                                    <div class="item">
+                                                        <div class="info-date">
+                                                            <p class="date-letter">SUN</p>
+                                                            <p class="date-number">01</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="info-date">
+                                                            <p class="date-letter">MON</p>
+                                                            <p class="date-number">01</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="info-date">
+                                                            <p class="date-letter">TUE</p>
+                                                            <p class="date-number">01</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="info-date">
+                                                            <p class="date-letter">WED</p>
+                                                            <p class="date-number">01</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="info-date">
+                                                            <p class="date-letter">THU</p>
+                                                            <p class="date-number">01</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="info-date">
+                                                            <p class="date-letter">FRI</p>
+                                                            <p class="date-number">01</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="info-date">
+                                                            <p class="date-letter">SAT</p>
+                                                            <p class="date-number">01</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="btn btn-next"><i class='bx bxs-chevron-right' ></i></div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row mt-3">
                                     <div class="col-12 p-0 mb-2">
                                         <div class="title-time">

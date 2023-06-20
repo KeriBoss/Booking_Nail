@@ -4,6 +4,14 @@ require_once '../model/company.php';
 require_once '../model/service.php';
 require_once '../model/staff.php';
 
+
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 60)) {
+    // request 30 minates ago
+    session_destroy();
+    session_unset();
+}
+$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time
+
 $company = new Company();
 $service = new Service();
 $staff = new Staff();
@@ -227,6 +235,12 @@ if(isset($_SESSION['error-phone'])){
             <div class="modal-footer">
                 <a id="btnAddVehicle" data-modal="close" onclick="checkStaffChoose();" class="btn btn-primary">Continue</a>
             </div>
+            <!-- <div class="footer-end mt-5">
+                <div class="group-btn">
+                    <a href="index.php?id=<?=$ID_COM?>" class="back">Back</a>
+                    <button type="submit">Continue</button>
+                </div>
+            </div> -->
         </form>
     </div>
 </div>
